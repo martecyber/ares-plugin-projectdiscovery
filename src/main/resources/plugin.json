@@ -1,0 +1,10 @@
+{
+  "id": "projectdiscovery",
+  "version": "1.0.0-beta1",
+  "displayName": "ProjectDiscovery suite",
+  "vendor": "Mart\u00edn Romera",
+  "license": "Proprietary",
+  "description": "Bundles naabu, httpx, subfinder, dnsx, nuclei and katana \u2014 the agent-executed tools from the ProjectDiscovery organization \u2014 under one install/enable lifecycle. Ships each tool's ImportParser plus a 6-entry agent-tools.json spec.",
+  "sdkVersion": "1",
+  "icon": "/img/sources/projectdiscovery.svg"
+}

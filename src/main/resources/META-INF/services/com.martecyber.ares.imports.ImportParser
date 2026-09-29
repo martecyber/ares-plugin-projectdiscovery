@@ -1,0 +1,6 @@
+com.martecyber.plugins.projectdiscovery.NaabuParser
+com.martecyber.plugins.projectdiscovery.HttpxParser
+com.martecyber.plugins.projectdiscovery.NucleiJSONParser
+com.martecyber.plugins.projectdiscovery.DnsxParser
+com.martecyber.plugins.projectdiscovery.KatanaParser
+com.martecyber.plugins.projectdiscovery.SubfinderParser

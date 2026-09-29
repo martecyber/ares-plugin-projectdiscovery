@@ -1,0 +1,736 @@
+[
+  {
+    "toolId": "naabu",
+    "displayName": "Naabu",
+    "binary": "naabu",
+    "resultFormat": "default",
+    "validScopeKinds": [
+      "domain",
+      "domain_wildcard",
+      "ip",
+      "cidr"
+    ],
+    "validAssetTypes": [
+      "ip",
+      "domain",
+      "host"
+    ],
+    "maxTargets": null,
+    "targetEmission": "joined",
+    "targetFlag": "-host",
+    "outputArgs": [
+      "-json",
+      "-o",
+      "{outPath}",
+      "-silent"
+    ],
+    "minVersion": null,
+    "requiresRoot": false,
+    "customBuilder": null,
+    "fields": [
+      {
+        "key": "ports",
+        "type": "string",
+        "flag": "-p",
+        "pattern": "^[A-Za-z0-9,\\-]{1,2048}$"
+      },
+      {
+        "key": "topPorts",
+        "type": "string",
+        "flag": "-top-ports",
+        "pattern": "^[A-Za-z0-9,\\-]{1,16}$"
+      },
+      {
+        "key": "excludePorts",
+        "type": "string",
+        "flag": "-exclude-ports",
+        "pattern": "^[A-Za-z0-9,\\-]{1,2048}$"
+      },
+      {
+        "key": "rate",
+        "type": "number",
+        "flag": "-rate",
+        "min": 1,
+        "max": 100000,
+        "ruleBinding": "rate_limit"
+      },
+      {
+        "key": "concurrency",
+        "type": "number",
+        "flag": "-c",
+        "min": 1,
+        "max": 1000,
+        "ruleBinding": "concurrency"
+      },
+      {
+        "key": "timeout",
+        "type": "number",
+        "flag": "-timeout",
+        "min": 100,
+        "max": 60000
+      },
+      {
+        "key": "retries",
+        "type": "number",
+        "flag": "-retries",
+        "min": 0,
+        "max": 10
+      },
+      {
+        "key": "scanAllIps",
+        "type": "boolean_flag",
+        "flag": "-sa"
+      },
+      {
+        "key": "skipHostDiscovery",
+        "type": "boolean_flag",
+        "flag": "-Pn"
+      }
+    ]
+  },
+  {
+    "toolId": "httpx",
+    "displayName": "httpx",
+    "binary": "httpx",
+    "resultFormat": "default",
+    "validScopeKinds": [
+      "domain",
+      "domain_wildcard",
+      "url",
+      "url_wildcard",
+      "ip",
+      "cidr"
+    ],
+    "validAssetTypes": [
+      "ip",
+      "domain",
+      "host",
+      "service",
+      "web_application",
+      "web_endpoint"
+    ],
+    "maxTargets": null,
+    "targetEmission": "list-file",
+    "targetFlag": "-l",
+    "outputArgs": [
+      "-json",
+      "-o",
+      "{outPath}",
+      "-silent"
+    ],
+    "minVersion": null,
+    "requiresRoot": false,
+    "customBuilder": null,
+    "fields": [
+      {
+        "key": "ports",
+        "type": "string",
+        "flag": "-ports",
+        "pattern": "^[A-Za-z0-9,\\-]{1,2048}$"
+      },
+      {
+        "key": "matchStatusCodes",
+        "type": "string",
+        "flag": "-mc",
+        "pattern": "^[\\dx,]{1,128}$"
+      },
+      {
+        "key": "filterStatusCodes",
+        "type": "string",
+        "flag": "-fc",
+        "pattern": "^[\\dx,]{1,128}$"
+      },
+      {
+        "key": "method",
+        "type": "enum",
+        "flag": "-method",
+        "options": [
+          "GET",
+          "HEAD",
+          "POST",
+          "PUT",
+          "PATCH",
+          "DELETE",
+          "OPTIONS"
+        ]
+      },
+      {
+        "key": "path",
+        "type": "string",
+        "flag": "-path",
+        "pattern": "^[A-Za-z0-9_\\-./~?=&%+]{1,512}$"
+      },
+      {
+        "key": "threads",
+        "type": "number",
+        "flag": "-threads",
+        "min": 1,
+        "max": 500,
+        "ruleBinding": "concurrency"
+      },
+      {
+        "key": "rateLimit",
+        "type": "number",
+        "flag": "-rate-limit",
+        "min": 1,
+        "max": 10000,
+        "ruleBinding": "rate_limit"
+      },
+      {
+        "key": "timeout",
+        "type": "number",
+        "flag": "-timeout",
+        "min": 1,
+        "max": 600
+      },
+      {
+        "key": "techDetect",
+        "type": "boolean_flag",
+        "flag": "-td"
+      },
+      {
+        "key": "title",
+        "type": "boolean_flag",
+        "flag": "-title"
+      },
+      {
+        "key": "server",
+        "type": "boolean_flag",
+        "flag": "-server"
+      },
+      {
+        "key": "contentLength",
+        "type": "boolean_flag",
+        "flag": "-cl"
+      },
+      {
+        "key": "favicon",
+        "type": "boolean_flag",
+        "flag": "-favicon"
+      },
+      {
+        "key": "followRedirects",
+        "type": "boolean_flag",
+        "flag": "-fr"
+      },
+      {
+        "key": "randomAgent",
+        "type": "boolean_flag",
+        "flag": "-random-agent"
+      },
+      {
+        "key": "userAgent",
+        "type": "string",
+        "flag": "-H",
+        "valueTemplate": "User-Agent: {value}",
+        "pattern": "^[\\x20-\\x7e]{1,512}$"
+      },
+      {
+        "key": "headers",
+        "type": "string",
+        "flag": "-H",
+        "repeat": true,
+        "pattern": "^[A-Za-z0-9_\\-]{1,64}: [\\x20-\\x7e]{1,2048}$",
+        "ruleBinding": "headers"
+      }
+    ]
+  },
+  {
+    "toolId": "subfinder",
+    "displayName": "Subfinder",
+    "binary": "subfinder",
+    "resultFormat": "default",
+    "validScopeKinds": [
+      "domain",
+      "domain_wildcard"
+    ],
+    "validAssetTypes": [
+      "domain",
+      "host"
+    ],
+    "maxTargets": null,
+    "targetEmission": "joined",
+    "targetFlag": "-d",
+    "outputArgs": [
+      "-oJ",
+      "-o",
+      "{outPath}",
+      "-silent"
+    ],
+    "minVersion": null,
+    "requiresRoot": false,
+    "customBuilder": null,
+    "fields": [
+      {
+        "key": "sources",
+        "type": "string",
+        "flag": "-sources",
+        "pattern": "^[A-Za-z0-9_,\\-.\\s]{1,512}$"
+      },
+      {
+        "key": "excludeSources",
+        "type": "string",
+        "flag": "-exclude-sources",
+        "pattern": "^[A-Za-z0-9_,\\-.\\s]{1,512}$"
+      },
+      {
+        "key": "allSources",
+        "type": "boolean_flag",
+        "flag": "-all"
+      },
+      {
+        "key": "recursive",
+        "type": "boolean_flag",
+        "flag": "-recursive"
+      },
+      {
+        "key": "timeout",
+        "type": "number",
+        "flag": "-timeout",
+        "min": 1,
+        "max": 600
+      },
+      {
+        "key": "maxTime",
+        "type": "number",
+        "flag": "-max-time",
+        "min": 1,
+        "max": 3600
+      },
+      {
+        "key": "threads",
+        "type": "number",
+        "flag": "-t",
+        "min": 1,
+        "max": 200,
+        "ruleBinding": "concurrency"
+      },
+      {
+        "key": "rateLimit",
+        "type": "number",
+        "flag": "-rl",
+        "min": 1,
+        "max": 10000
+      }
+    ]
+  },
+  {
+    "toolId": "dnsx",
+    "displayName": "dnsx",
+    "binary": "dnsx",
+    "resultFormat": "default",
+    "validScopeKinds": [
+      "domain",
+      "domain_wildcard"
+    ],
+    "validAssetTypes": [
+      "domain",
+      "host"
+    ],
+    "maxTargets": null,
+    "targetEmission": "list-file",
+    "targetFlag": "-l",
+    "outputArgs": [
+      "-json",
+      "-o",
+      "{outPath}",
+      "-silent"
+    ],
+    "minVersion": null,
+    "requiresRoot": false,
+    "customBuilder": null,
+    "fields": [
+      {
+        "key": "recordTypes",
+        "type": "enum",
+        "flag": null,
+        "repeat": true,
+        "options": [
+          "-a",
+          "-aaaa",
+          "-cname",
+          "-mx",
+          "-ns",
+          "-txt",
+          "-ptr",
+          "-soa",
+          "-srv",
+          "-caa"
+        ]
+      },
+      {
+        "key": "resolvers",
+        "type": "string",
+        "flag": "-r",
+        "pattern": "^[0-9.,:\\s]{1,512}$"
+      },
+      {
+        "key": "rateLimit",
+        "type": "number",
+        "flag": "-rl",
+        "min": 1,
+        "max": 10000
+      },
+      {
+        "key": "threads",
+        "type": "number",
+        "flag": "-t",
+        "min": 1,
+        "max": 1000,
+        "ruleBinding": "concurrency"
+      },
+      {
+        "key": "retries",
+        "type": "number",
+        "flag": "-retry",
+        "min": 0,
+        "max": 10
+      },
+      {
+        "key": "timeout",
+        "type": "number",
+        "flag": "-timeout",
+        "min": 1,
+        "max": 60
+      },
+      {
+        "key": "axfr",
+        "type": "boolean_flag",
+        "flag": "-axfr"
+      },
+      {
+        "key": "trace",
+        "type": "boolean_flag",
+        "flag": "-trace"
+      },
+      {
+        "key": "showResponse",
+        "type": "boolean_flag",
+        "flag": "-resp"
+      }
+    ]
+  },
+  {
+    "toolId": "nuclei",
+    "displayName": "Nuclei",
+    "binary": "nuclei",
+    "resultFormat": "default",
+    "validScopeKinds": [
+      "domain",
+      "domain_wildcard",
+      "url",
+      "url_wildcard",
+      "ip",
+      "cidr"
+    ],
+    "validAssetTypes": [
+      "ip",
+      "domain",
+      "host",
+      "service",
+      "web_application",
+      "web_endpoint"
+    ],
+    "maxTargets": null,
+    "targetEmission": "list-file",
+    "targetFlag": "-l",
+    "outputArgs": [
+      "-jsonl",
+      "-o",
+      "{outPath}",
+      "-silent"
+    ],
+    "minVersion": null,
+    "requiresRoot": false,
+    "customBuilder": null,
+    "fields": [
+      {
+        "key": "severity",
+        "type": "string",
+        "flag": "-severity",
+        "pattern": "^[A-Za-z0-9_,\\-.\\s]{1,128}$"
+      },
+      {
+        "key": "tags",
+        "type": "string",
+        "flag": "-tags",
+        "pattern": "^[A-Za-z0-9_,\\-.\\s]{1,512}$"
+      },
+      {
+        "key": "excludeTags",
+        "type": "string",
+        "flag": "-exclude-tags",
+        "pattern": "^[A-Za-z0-9_,\\-.\\s]{1,512}$"
+      },
+      {
+        "key": "templateIds",
+        "type": "string",
+        "flag": "-id",
+        "pattern": "^[A-Za-z0-9_,\\-.\\s]{1,512}$"
+      },
+      {
+        "key": "excludeIds",
+        "type": "string",
+        "flag": "-exclude-id",
+        "pattern": "^[A-Za-z0-9_,\\-.\\s]{1,512}$"
+      },
+      {
+        "key": "authors",
+        "type": "string",
+        "flag": "-author",
+        "pattern": "^[A-Za-z0-9_,\\-.\\s]{1,512}$"
+      },
+      {
+        "key": "templates",
+        "type": "string",
+        "flag": "-t",
+        "pattern": "^[A-Za-z0-9_,\\-./\\s]{1,512}$"
+      },
+      {
+        "key": "protocols",
+        "type": "string",
+        "flag": "-type",
+        "pattern": "^[A-Za-z0-9_,\\-.\\s]{1,128}$"
+      },
+      {
+        "key": "excludeProtocols",
+        "type": "string",
+        "flag": "-exclude-type",
+        "pattern": "^[A-Za-z0-9_,\\-.\\s]{1,128}$"
+      },
+      {
+        "key": "rateLimit",
+        "type": "number",
+        "flag": "-rl",
+        "min": 1,
+        "max": 10000,
+        "ruleBinding": "rate_limit"
+      },
+      {
+        "key": "bulkSize",
+        "type": "number",
+        "flag": "-bs",
+        "min": 1,
+        "max": 1000
+      },
+      {
+        "key": "concurrency",
+        "type": "number",
+        "flag": "-c",
+        "min": 1,
+        "max": 500,
+        "ruleBinding": "concurrency"
+      },
+      {
+        "key": "timeout",
+        "type": "number",
+        "flag": "-timeout",
+        "min": 1,
+        "max": 600
+      },
+      {
+        "key": "retries",
+        "type": "number",
+        "flag": "-retries",
+        "min": 0,
+        "max": 10
+      },
+      {
+        "key": "dast",
+        "type": "boolean_flag",
+        "flag": "-dast"
+      },
+      {
+        "key": "headless",
+        "type": "boolean_flag",
+        "flag": "-headless"
+      },
+      {
+        "key": "newTemplatesOnly",
+        "type": "boolean_flag",
+        "flag": "-nt"
+      },
+      {
+        "key": "automaticScan",
+        "type": "boolean_flag",
+        "flag": "-as"
+      },
+      {
+        "key": "userAgent",
+        "type": "string",
+        "flag": "-H",
+        "valueTemplate": "User-Agent: {value}",
+        "pattern": "^[\\x20-\\x7e]{1,512}$"
+      },
+      {
+        "key": "headers",
+        "type": "string",
+        "flag": "-H",
+        "repeat": true,
+        "pattern": "^[A-Za-z0-9_\\-]{1,64}: [\\x20-\\x7e]{1,2048}$",
+        "ruleBinding": "headers"
+      }
+    ]
+  },
+  {
+    "toolId": "katana",
+    "displayName": "Katana",
+    "binary": "katana",
+    "resultFormat": "default",
+    "validScopeKinds": [
+      "url",
+      "url_wildcard",
+      "domain",
+      "domain_wildcard"
+    ],
+    "validAssetTypes": [
+      "web_application",
+      "web_endpoint",
+      "domain"
+    ],
+    "maxTargets": null,
+    "targetEmission": "list-file",
+    "targetFlag": "-list",
+    "outputArgs": [
+      "-jsonl",
+      "-o",
+      "{outPath}",
+      "-silent",
+      "-no-color"
+    ],
+    "minVersion": null,
+    "requiresRoot": false,
+    "customBuilder": null,
+    "fields": [
+      {
+        "key": "depth",
+        "type": "number",
+        "flag": "-d",
+        "min": 1,
+        "max": 10
+      },
+      {
+        "key": "concurrency",
+        "type": "number",
+        "flag": "-c",
+        "min": 1,
+        "max": 500,
+        "ruleBinding": "concurrency"
+      },
+      {
+        "key": "parallelism",
+        "type": "number",
+        "flag": "-p",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "key": "rateLimit",
+        "type": "number",
+        "flag": "-rl",
+        "min": 1,
+        "max": 10000,
+        "ruleBinding": "rate_limit"
+      },
+      {
+        "key": "timeout",
+        "type": "number",
+        "flag": "-timeout",
+        "min": 1,
+        "max": 600
+      },
+      {
+        "key": "crawlDuration",
+        "type": "number",
+        "flag": "-ct",
+        "min": 1,
+        "max": 86400
+      },
+      {
+        "key": "maxResponseSize",
+        "type": "number",
+        "flag": "-mrs",
+        "min": 1,
+        "max": 104857600
+      },
+      {
+        "key": "jsCrawl",
+        "type": "boolean_flag",
+        "flag": "-jc"
+      },
+      {
+        "key": "jsParserCrawl",
+        "type": "boolean_flag",
+        "flag": "-jsl"
+      },
+      {
+        "key": "automaticFormFill",
+        "type": "boolean_flag",
+        "flag": "-aff"
+      },
+      {
+        "key": "headless",
+        "type": "boolean_flag",
+        "flag": "-hl"
+      },
+      {
+        "key": "displayOutScope",
+        "type": "boolean_flag",
+        "flag": "-do"
+      },
+      {
+        "key": "matchRegex",
+        "type": "string",
+        "flag": "-mr",
+        "pattern": "^[^\\x00-\\x1f]{1,512}$"
+      },
+      {
+        "key": "filterRegex",
+        "type": "string",
+        "flag": "-fr",
+        "pattern": "^[^\\x00-\\x1f]{1,512}$"
+      },
+      {
+        "key": "fieldScope",
+        "type": "enum",
+        "flag": "-fs",
+        "options": [
+          "rdn",
+          "fqdn",
+          "dn",
+          "url"
+        ],
+        "defaultValue": "rdn"
+      },
+      {
+        "key": "crawlScope",
+        "type": "string",
+        "flag": "-cs",
+        "pattern": "^[^\\x00-\\x1f]{1,1024}$"
+      },
+      {
+        "key": "outScope",
+        "type": "string",
+        "flag": "-os",
+        "pattern": "^[^\\x00-\\x1f]{1,1024}$"
+      },
+      {
+        "key": "strategy",
+        "type": "enum",
+        "flag": "-strategy",
+        "options": [
+          "depth-first",
+          "breadth-first"
+        ]
+      },
+      {
+        "key": "headers",
+        "type": "string",
+        "flag": "-H",
+        "repeat": true,
+        "pattern": "^[A-Za-z0-9_\\-]{1,64}: [\\x20-\\x7e]{1,2048}$",
+        "ruleBinding": "headers"
+      }
+    ]
+  }
+]
